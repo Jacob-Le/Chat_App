@@ -317,8 +317,10 @@ class ChatWindow(QMainWindow, ChatUI):
 
         if confirm == QMessageBox.Yes:
             if self.client.is_connected:
-                # send {QUIT} message to server
-                self.client.send_message("", "{QUIT}")
+                 # send {QUIT} message to server
+                    self.client.disconnect()
+                    self.client_thread.quit()
+                    self.client_thread.wait()
             print("Closing...")
             QCoreApplication.quit()
         else:
