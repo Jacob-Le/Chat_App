@@ -106,7 +106,7 @@ class LoginDialog(QDialog, LoginUI):
 
         self.default_info = ""
         self.u_rules = re.compile(
-            r'[^a-zA-Z\d\s]', re.IGNORECASE)  # Rules for username
+            r'[^a-zA-Z\d]', re.IGNORECASE)  # Rules for username
         self.bad_names = re.compile(r'\ball\b', re.IGNORECASE)
 
     """Helper slot function that returns the info back to it's default message
