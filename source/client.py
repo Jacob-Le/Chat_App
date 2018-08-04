@@ -39,11 +39,11 @@ class Client(QObject):
         if not self.is_connected:
             self.connect()
 
-        while True:
+        while self.is_connected:
             try:
                 # Get messages from socket
                 for msg in self.read_msg():
-
+                    
                     if self.is_connected and msg == "":
                         self.disconnect()
                         print("Empty/Invalid message!")
@@ -55,7 +55,6 @@ class Client(QObject):
                         self.users = msg_params[1].split("|")
                         self.users.append("ALL")
                         # Update recipients
-                        print("recieved ack")
                         self.update_widgets.emit()
                         msg = ""
                         continue
@@ -101,6 +100,7 @@ class Client(QObject):
 
             while buffer.find(self.delim) != -1:
                 msg, buffer = buffer.split(self.delim, 1)
+                print(msg)
                 yield msg
         return
 
@@ -142,6 +142,7 @@ class Client(QObject):
     def register(self, username):
         self.send_message(username, prefix="{REGISTER}")
         self.name = username
+        print("Registering with %s" % self.name)
 
     """Send a message to the server. 
     msg: string message

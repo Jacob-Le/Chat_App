@@ -214,7 +214,7 @@ class ChatWindow(QMainWindow, ChatUI):
         self.client.conn_status.connect(self.update_conn)
 
         # Setup thread for running client connection
-        self.client_thread = QThread()
+        self.client_thread = None
 
         self.prompt_login()
 
@@ -331,6 +331,7 @@ class ChatWindow(QMainWindow, ChatUI):
     """
 
     def prompt_login(self):
+        self.client_thread = QThread()
         self.client.moveToThread(self.client_thread)
         self.client_thread.started.connect(self.client.run)
         self.client_thread.start()
